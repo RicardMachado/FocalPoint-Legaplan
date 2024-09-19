@@ -1,0 +1,25 @@
+// .container {
+//     position: fixed;
+//     inset: 0; /* Cobre toda a tela */
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     background-color: rgba(0, 0, 0, 0.5); /* Efeito de escurecimento */
+//     backdrop-filter: blur(8px); /* Efeito de desfoque no fundo */
+//     z-index: 1000; /* Garante que esteja sobreposto */ 
+// }
+
+// .content {
+//     // position: fixed;
+//     // top: 50%;
+//     // left: 50%;
+//     // transform: translate(-50%, -50%); // Centraliza horizontal e verticalmente
+    
+//   z-index: 1010; // Acima do overlay
+//   max-width: 450px;
+//   width: 100%; /* Adapta-se ao tamanho máximo */
+//   background: #FFFFFF;
+//   padding: 2rem;
+//   border-radius: 1rem;
+//   box-shadow: 0px 24px 48px -12px #1018282E;
+// };
