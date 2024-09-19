@@ -10,22 +10,17 @@
   line-height: 1.8rem;  
 }
 
+.description {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #0000008A;
+}
+
 .content {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.contentLabel {
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.8rem;  
-}
-
-.contentInput {
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid #D7DDE9
 }
 
 .dialogFooter {
@@ -36,11 +31,11 @@
   gap: 0.5rem;
 }
 
-.buttonAdd {
+.buttonDelete {
   width: 100%;
   padding: 1rem 1.5rem 1rem 1.5rem;
   border-radius: 8px;
-  background: linear-gradient(90deg, #0796D3 0%, #53C0F0 68.65%);
+  background: linear-gradient(90deg, #D30707 0%, #F05353 68.65%);
   border: none;
   color: white;
   font-size: 1rem;
@@ -48,7 +43,7 @@
   cursor: pointer;
 
   &:hover {
-    background: linear-gradient(90deg, #0683b8 0%, #4bb0e1 68.65%);
+    background: linear-gradient(90deg, #b60606 0%, #d94747 68.65%);
   }
 }
 

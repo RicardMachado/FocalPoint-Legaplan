@@ -33,6 +33,22 @@
   color: white;
   font-size: 1rem;
   font-weight: 500;
+
+  &:hover {
+    background: linear-gradient(90deg, #0683b8 0%, #4bb0e1 68.65%);
+  }
+}
+
+.noTask {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #0000008A;
+  min-width: 17rem;
+  border: 1px dashed #B0BBD1;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 @media (min-width: 768px) {

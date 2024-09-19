@@ -1,35 +1,40 @@
-import { Button, Dialog, Flex, TextField, Text } from "@radix-ui/themes";
+'use cliente'
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import styles from "./createTaskDialog.module.scss";
 
-export function CreateTaskDialog() {
+interface CreateTaskDialogProps {
+  handlerAddTask: (newTask: string) => void
+}
+
+export function CreateTaskDialog({ handlerAddTask }: CreateTaskDialogProps) {
+  const [newTask, setNewTask] = useState<string>('');
+
   return (
-    <div className={styles.container}>
-    <Dialog.Content className={styles.content}>
-      <Dialog.Title>Nova tarefa</Dialog.Title>
+    <DialogContent className={styles.container}>
+      <DialogHeader>
+        <DialogTitle className={styles.dialogTitle}>Nova tarefa</DialogTitle>
+      </DialogHeader>
 
-      <Flex direction="column" gap="3">
-        {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-        <label>
-          <Text as="div" size="2" mb="1" weight="bold">
-            Título
-          </Text>
-          <TextField.Root
-            placeholder="Digite"
-          />
+      <div className={styles.content}>
+        <label htmlFor="title" className={styles.contentLabel}>
+          Título
         </label>
-      </Flex>
+        <input
+          className={styles.contentInput}
+          id="title"
+          placeholder="Digite"
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+      </div>
 
-      <Flex gap="3" mt="4" justify="end">
-        <Dialog.Close>
-          <Button variant="soft" color="gray">
-            Cancelar
-          </Button>
-        </Dialog.Close>
-        <Dialog.Close>
-          <Button>Adicionar</Button>
-        </Dialog.Close>
-      </Flex>
-  </Dialog.Content>
-  </div>
+      <DialogFooter className={styles.dialogFooter}>
+        <DialogClose asChild>
+          <Button className={styles.buttonCancel}>Cancelar</Button>
+        </DialogClose>
+        <Button className={styles.buttonAdd} onClick={() => handlerAddTask(newTask)}>Adicionar</Button>
+      </DialogFooter>
+    </DialogContent>
   );
 }

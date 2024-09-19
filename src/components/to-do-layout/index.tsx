@@ -1,11 +1,14 @@
 'use client' 
-import { Button, Dialog } from "@radix-ui/themes";
+
+import { useState } from "react";
 import styles from "./toDoLayout.module.scss";
 import { ToDoList } from "../to-do-list";
 import { CompletedTasks } from "../completed-tasks";
 import { CardToDo } from "../card-to-do";
-import { useState } from "react";
 import { CreateTaskDialog } from "../create-task-dialog";
+import { Button } from "../ui/button";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import { BookCheck } from "lucide-react";
 
 const tasksData = [
   {
@@ -38,37 +41,88 @@ interface Task {
 
 export function ToDoLayout() {
   const [tasks, setTasks] = useState<Task[]>(tasksData);
-  const [newTask, setNewTask] = useState<string>('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
 
+  function addTask(newTask: string) {
+    if (newTask.trim() === '') return;
+
+    const newTaskObject: Task = {
+      id: Date.now(),
+      title: newTask,
+      completed: false,
+    };
+
+    setTasks([...tasks, newTaskObject]);
+    setIsCreateTaskOpen(false);
+  };
+
+  function toggleTaskCompletion (taskId: number) {
+    setTasks(
+      tasks.map(task =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  function deleteTask (taskId: number) {
+    setTasks(tasks.filter(task => task.id !== taskId));
+  };
+
+  const incompleteTasks = tasks.filter(task => task.completed)
+  const completeTasks = tasks.filter(task => !task.completed)
+  
   return (
       <div className={styles.container}>
         <div className={styles.content}>
           <ToDoList>
-            {
-            tasks
-              .filter(task => !task.completed)
-              .map(task => (
-                <CardToDo key={task.id} title={task.title} />
-              ))
+            { completeTasks.length === 0
+              ?
+              <div className={styles.noTask}>
+                <BookCheck />
+                <p>Adicione uma nova tarefa</p>
+              </div>
+              :
+              tasks
+                .filter(task => !task.completed)
+                .map(task => (
+                  <CardToDo
+                    key={task.id}
+                    title={task.title}
+                    handleCheck={() => toggleTaskCompletion(task.id)}
+                    handleClickDelete={() => deleteTask(task.id)}
+                  />
+                )
+              )
             }
           </ToDoList>
           <CompletedTasks>
-          {
-            tasks
-              .filter(task => task.completed)
-              .map(task => (
-                <CardToDo key={task.id} title={task.title} isCompleted={task.completed} />
-              ))
+            { incompleteTasks.length === 0
+            ?
+            <div className={styles.noTask}>
+              <BookCheck />
+              <p>Sem tarefa finalizada no momento</p>  
+            </div>
+            :
+              tasks
+                .filter(task => task.completed)
+                .map(task => (
+                  <CardToDo
+                    key={task.id}
+                    title={task.title}
+                    isCompleted={task.completed}
+                    handleClickDelete={() => deleteTask(task.id)}
+                  />
+                )
+              )
             }
           </CompletedTasks>
         </div>
-        <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
-          <Dialog.Trigger>
+        <Dialog open={isCreateTaskOpen} onOpenChange={setIsCreateTaskOpen}>
+          <DialogTrigger asChild>
             <Button className={styles.button}>Adicionar nova tarefa</Button>
-          </Dialog.Trigger>
-          <CreateTaskDialog />
-        </Dialog.Root>
+          </DialogTrigger>
+          <CreateTaskDialog handlerAddTask={addTask} />
+        </Dialog>
       </div>
   );
 }
